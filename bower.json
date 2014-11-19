@@ -17,6 +17,7 @@
         "number"
     ],
     "license": "MIT",
+    "main": "./src/jquery-bindingformat.js",
     "ignore": [
         "**/.*",
         "bower_components",
