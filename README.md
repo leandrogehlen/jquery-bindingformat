@@ -1,5 +1,5 @@
-jquery-bindingformat
-====================
+jQuery Binding Format 
+=====================
 
 [![Build Status](https://travis-ci.org/leandrogehlen/jquery-bindingformat.svg?branch=master)](https://travis-ci.org/leandrogehlen/jquery-bindingformat)
 
