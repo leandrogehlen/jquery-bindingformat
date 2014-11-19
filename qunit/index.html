@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Binding Format Test</title>
+    <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <script src="../bower_components/qunit/qunit/qunit.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../src/jquery-bindingformat.js"></script>
+    <script src="../src/i18n/jquery-bindingformat-pt-BR.js"></script>
+    <script src="test.js"></script>
+
+    <form>
+        <input id="date-input" name="date" type="text" value="31/12/2014">
+        <input id="float-input" name="float" type="text" value="1.500,23">
+    </form>
+
+</body>
+</html>
