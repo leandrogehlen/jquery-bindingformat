@@ -61,7 +61,7 @@
                 name = that.element.attr('name');
             this.element.removeAttr("name");
 
-            var input = $('<input type="hidden"/>').appendTo(that.element.parents('form:first'));
+            var input = $('<input type="hidden"/>').appendTo(that.element.parent());
             input.attr("name", name);
 
             this.element.on('change', function() {
