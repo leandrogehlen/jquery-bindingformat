@@ -49,6 +49,10 @@
         },
 
         getValue: function() {
+            return this.hidden.data("value");
+        },
+
+        getText: function() {
             return this.hidden.val();
         },
 
@@ -70,7 +74,7 @@
                     data.hidden.val(value);
                 } else {
                     if (data.type == "date" ) {
-                        that._setFormattedDate(formats.display.dateFormat, formats.transport.dateFormat, formats.language);
+                        that._setFormattedDate(formats);
                     }
                     else if (data.type == "float") {
                         that._setFormattedNumber(formats.display.numberFormat, formats.transport.numberFormat);
@@ -81,11 +85,13 @@
             return input;
         },
 
-        _setFormattedDate: function(display, transport, language) {
-            var settings = this.regional[language];
-            var date = this._parseDate(display, this.element.val(), settings),
-                formated = this._formatDate(transport, date, settings);
+        _setFormattedDate: function(formats) {
+            var display = this.regional[formats.display.language],
+                transport = this.regional[formats.display.language],
+                date = this._parseDate(formats.display.dateFormat, this.element.val(), display),
+                formated = this._formatDate(formats.transport.dateFormat, date, transport);
 
+            this.hidden.data("value", date);
             this.hidden.val(formated);
         },
 
@@ -94,6 +100,7 @@
             var number = this.element.val().replace(pattern, transport.thousands);
 
             number = number.replace(new RegExp("\\" + display.decimal), transport.decimal);
+            this.hidden.data("value", (!number) ? 0 : parseFloat(number));
             this.hidden.val(number);
         },
 
@@ -437,8 +444,8 @@
     $.fn.bindingFormat.regional = [];
 
     var FORMATS = {
-        language: 'en',
         display: {
+            language: 'en',
             dateFormat: "mm/dd/yy",
             numberFormat: {
                 thousands: '.',
@@ -446,6 +453,7 @@
             }
         },
         transport : {
+            language: 'en',
             dateFormat: "yy-mm-dd",
             numberFormat: {
                 thousands: '',
