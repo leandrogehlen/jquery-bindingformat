@@ -4,7 +4,7 @@
  * Released under the MIT license.
  * https://github.com/leandrogehlen/jquery-bindingformat
  *
- * The methods for parsing dates were extracted: from https://github.com/jquery/jquery-ui/blob/master/ui/datepicker.js
+ * The methods for parsing dates were extracted from: https://github.com/jquery/jquery-ui/blob/master/ui/datepicker.js
  */
 (function($){
 
@@ -67,18 +67,13 @@
             this.element.on('change', function() {
                 var $this = $(this),
                     data = $this.data("bindingformat"),
-                    formats = data.options,
-                    value = $this.val();
+                    formats = data.options;
 
-                if (!value) {
-                    data.hidden.val(value);
-                } else {
-                    if (data.type == "date" ) {
-                        that._setFormattedDate(formats);
-                    }
-                    else if (data.type == "float") {
-                        that._setFormattedNumber(formats.display.numberFormat, formats.transport.numberFormat);
-                    }
+                if (data.type == "date" ) {
+                    that._setFormattedDate(formats);
+                }
+                else if (data.type == "float") {
+                    that._setFormattedNumber(formats);
                 }
             });
 
@@ -95,9 +90,11 @@
             this.hidden.val(formated);
         },
 
-        _setFormattedNumber: function(display, transport){
-            var pattern = new RegExp("\\" + display.thousands, "g");
-            var number = this.element.val().replace(pattern, transport.thousands);
+        _setFormattedNumber: function(formats){
+            var display = formats.display.numberFormat,
+                transport = formats.transport.numberFormat,
+                pattern = new RegExp("\\" + display.thousands, "g"),
+                number = this.element.val().replace(pattern, transport.thousands);
 
             number = number.replace(new RegExp("\\" + display.decimal), transport.decimal);
             this.hidden.data("value", (!number) ? 0 : parseFloat(number));
