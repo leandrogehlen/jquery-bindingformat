@@ -4,6 +4,9 @@ before_script:
   - npm install -g grunt-cli
   - npm install -g bower
   - bower install
+  
+after_script:
+  - codeclimate-test-reporter < lcov.info
 
 script: grunt default --verbose --force
 
