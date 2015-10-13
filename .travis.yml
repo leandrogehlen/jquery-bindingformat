@@ -3,6 +3,7 @@ language: node_js
 before_script:
   - npm install -g grunt-cli
   - npm install -g bower
+  - npm install -g codeclimate-test-reporter
   - bower install
   
 after_script:
