@@ -6,3 +6,7 @@ before_script:
   - bower install
 
 script: grunt default --verbose --force
+
+addons:
+    code_climate:
+        repo_token: ebd7144a5a22962119457649c88081b426611cd447e94c91ad427fec2e3bed46
