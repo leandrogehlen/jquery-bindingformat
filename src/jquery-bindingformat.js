@@ -49,11 +49,25 @@
         },
 
         getValue: function() {
+            this._update();
             return this.hidden.data("value");
         },
 
         getText: function() {
+            this._update();
             return this.hidden.val();
+        },
+
+        _update: function() {
+            var data = this.element.data("bindingformat"),
+                formats = data.options;
+
+            if (data.type == "date" ) {
+                this._setFormattedDate(formats);
+            }
+            else if (data.type == "float") {
+                this._setFormattedNumber(formats);
+            }
         },
 
         _appendHiddenInput: function() {
@@ -65,16 +79,7 @@
             input.attr("name", name);
 
             this.element.on('change', function() {
-                var $this = $(this),
-                    data = $this.data("bindingformat"),
-                    formats = data.options;
-
-                if (data.type == "date" ) {
-                    that._setFormattedDate(formats);
-                }
-                else if (data.type == "float") {
-                    that._setFormattedNumber(formats);
-                }
+                that._update();
             });
 
             return input;
@@ -97,8 +102,9 @@
                 number = this.element.val().replace(pattern, transport.thousands);
 
             number = number.replace(new RegExp("\\" + display.decimal), transport.decimal);
-            this.hidden.data("value", (!number) ? 0 : parseFloat(number));
-            this.hidden.val(number);
+            var value = (!number) ? 0 : parseFloat(number);
+            this.hidden.data("value", value);
+            this.hidden.val(value);
         },
 
         /* Parse a string value into a date object.
@@ -255,7 +261,7 @@
                 year = new Date().getFullYear();
             } else if (year < 100) {
                 year += new Date().getFullYear() - new Date().getFullYear() % 100 +
-                (year <= shortYearCutoff ? 0 : -100);
+                    (year <= shortYearCutoff ? 0 : -100);
             }
 
             if (doy > -1) {
@@ -296,7 +302,7 @@
             return 32 - this._daylightSavingAdjust(new Date(year, month, 32)).getDate();
         },
         _ticksTo1970: (((1970 - 1) * 365 + Math.floor(1970 / 4) - Math.floor(1970 / 100) +
-            Math.floor(1970 / 400)) * 24 * 60 * 60 * 10000000),
+        Math.floor(1970 / 400)) * 24 * 60 * 60 * 10000000),
 
         /* Format a date object into a string value.
          * The format can be combinations of the following:
